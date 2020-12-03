@@ -1,9 +1,17 @@
 <?php
+
+use Classes\Comment;
+use Classes\DB;
+
+$db = new DB();
+$comment = new Comment($db->conn);
+
+
 if(count($_GET) && isset($_GET['del_comment']) && is_numeric($_GET['del_comment']))
 {
-    $delete_c=deleteComment($_GET['del_comment']);
+    $delete_c=$comment->deleteComment($_GET['del_comment']);
 }
-$comment=getComment();
+$comment_all=$comment->all();
 ?>
 
         <div class="content">
@@ -30,7 +38,7 @@ $comment=getComment();
                             <tbody>
                             <?php
                             $i = 1;
-                            while ($com = mysqli_fetch_array($comment)) {
+                            while ($com =$comment_all->fetch()){
                             ?>
                             <tr>
                                 <td><?= $i++ ?></td>
