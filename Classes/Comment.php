@@ -39,5 +39,15 @@ class Comment extends Model
         return ($page - 1) * 5;
 
     }
+    function updateComment($description,$is_confirm,$id)
+    {
+        $query = "UPDATE `comments` SET 
+        `description` = '{$description}',
+        `is_confirm` = '{$is_confirm}'
+         WHERE `id` = '{$id}'";
+        return $this->conn->query($query);
+
+    }
+   
 
 }
