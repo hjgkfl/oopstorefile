@@ -1,14 +1,23 @@
 <?php
+
+use Classes\categories;
+use Classes\DB;
+use Classes\Post;
+
+$db = new DB();
+$posts = new Post($db->conn);
+
 if(count($_POST) && isset($_POST['title']) && isset($_POST['short_description'])  && isset($_POST['description'])  && !empty($_POST['select_cate'])) {
     $pic_url=isset($_FILES['file']['name']) ? $_FILES['file']['name'] : '';
-  $insert_post=storePost($_POST['title'], $_POST['short_description'], $_POST['description'],$pic_url,$_POST['select_cate']);
+  $insert_post=$posts->storePost($_POST['title'], $_POST['short_description'], $_POST['description'],$pic_url,$_POST['select_cate']);
 	if($insert_post == true)
 	{
 		echo "<script>alert('اطلاعات پست جدید ذخیره شد')</script>";
   }
  
 }
-$category= getCate();
+$category= new categories($db->conn);
+$cate_all=$category->all();
 
 ?>
 
@@ -31,7 +40,7 @@ $category= getCate();
                     <label>انتخاب دسته بندی برای پست</label>
                     <select class="form-control" name="select_cate">
                       <option >انتخاب کنید</option>
-                      <?php while($row=mysqli_fetch_assoc($category)) { ?>
+                      <?php while($row=$cate_all->fetch()) { ?>
                       <option value="<?= $row['id'] ?>"><?= $row['title'] ?></option>
                       <?php
                       }
