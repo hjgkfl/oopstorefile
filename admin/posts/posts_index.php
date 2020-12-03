@@ -1,5 +1,11 @@
 <?php
 
+use Classes\DB;
+use Classes\Post;
+
+$db = new DB();
+$getposts = new Post($db->conn);
+
 if(count($_GET) && isset($_GET['del_post']) && is_numeric($_GET['del_post'])) {
     $result = deletePost($_GET['del_post']);
 	  if($result)
@@ -9,9 +15,8 @@ if(count($_GET) && isset($_GET['del_post']) && is_numeric($_GET['del_post'])) {
 		}
 }
 
-$posts = getPosts();
 
-
+$posts = $getposts->all();
 
 ?>
 
@@ -40,7 +45,7 @@ $posts = getPosts();
                 <tbody>
                     <?php
                     $i = 1;
-                    while ($post = mysqli_fetch_assoc($posts)) {
+                    while ($post = $posts->fetch()) {
                         ?>
                         <tr>
                             <td><?= $i++ ?></td>
