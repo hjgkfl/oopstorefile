@@ -1,5 +1,11 @@
 <?php
 
+use Classes\categories;
+use Classes\DB;
+
+$db= new DB();
+$categories_get =  new categories($db->conn);
+
 
 if(count($_POST) && isset($_POST['title']) && isset($_POST['comment']) && isset($_POST['parent_id']))
 {
@@ -11,13 +17,13 @@ if(count($_POST) && isset($_POST['title']) && isset($_POST['comment']) && isset(
 
      $parent_id=$_POST['parent_id'];
 	 $comment=$_POST['comment'];
-	 $insert_true=insertCate($title,$show_index,$comment,$parent_id);
+	 $insert_true=$categories_get->insertCate($title,$show_index,$comment,$parent_id);
 	if($insert_true)
 		 	 echo "<script>alert('دسته شما اضافه شد')</script>";
-	
 }
 
-$getcate=getCate();
+$getcate = $categories_get->all();
+
 ?>
 
     <div class="content">
@@ -49,7 +55,7 @@ $getcate=getCate();
                             <option value='0'>انتخاب كنيد</option>
 
                             <?php
-                            while($row=mysqli_fetch_array($getcate))
+                            while($row=$getcate->fetch())
                             {
                             ?>
                                 <option value='<?= $row['id']?>'><?= $row['title']?></option>
