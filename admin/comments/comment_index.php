@@ -41,7 +41,6 @@ $comment=getComment();
                                 <td><?= $com['created_at'] ?></td>
                                 <td class="d-flex justify-content-around">
                                     <a href="dashboard.php?edit_comment=<?= $com['id'] ?>" class="fa fa-edit fa-2x" data-toggle="tooltip" data-placement="top" title="ویرایش"></a>
-                                    <a href="dashboard.php?edit_comment=<?= $com['id'] ?> & reply=1" class="fa fa-reply-all fa-2x " data-toggle="tooltip" data-placement="top" title="پاسخ"></a>
                                     <a href="dashboard.php?del_comment=<?= $com['id'] ?>" onclick="return confirm('آیا می خواهید این کامنت را حذف کنید?');" class="fa fa-times fa-2x mr-1" style="color: red;" data-toggle="tooltip" data-placement="top" title="حذف"></a>
                                 </td>
                                 <?php

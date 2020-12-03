@@ -48,6 +48,9 @@ class Comment extends Model
         return $this->conn->query($query);
 
     }
-   
+    function deleteComment($comment_id) {
+        $query = "DELETE FROM `comments` WHERE `id`='{$comment_id}'";
+        return $this->conn->query($query);
+    }
 
 }
