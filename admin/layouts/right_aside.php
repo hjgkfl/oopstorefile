@@ -1,4 +1,13 @@
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+<?php
+
+
+use Classes\Comment;
+use Classes\DB;
+
+require_once '../config.php';
+
+?>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="img-admin/kaver.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -19,8 +28,10 @@
           </div>
         </div>
        <?php
-       $run=getComment();
-       $t=mysqli_num_rows($run);
+       $db= new DB();
+       $comment = new Comment($db->conn);
+       $run=$comment->all();
+       $t=$run->rowCount();
        ?>
         <!-- Sidebar Menu -->
         <nav class="mt-2">

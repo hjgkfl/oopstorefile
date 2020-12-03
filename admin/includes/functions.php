@@ -258,14 +258,14 @@ function pageNavi($post_id,$parent_id,$limit,$offset)
 {
     global $link;
     $query = "SELECT * FROM `comments` WHERE `post_id`=$post_id AND `is_confirm`= 1  AND `parent_id`=$parent_id  LIMIT  $limit OFFSET $offset ";
-    $result=mysqli_query($link,$query);
-    return $result;
+    return  mysqli_query($link,$query);
+
 
 }
 function commentCount($page)
 {
-    $c=($page - 1) * 5;
-    return $c;
+    return ($page - 1) * 5;
+
 }
 function searchPost($search)
 {
