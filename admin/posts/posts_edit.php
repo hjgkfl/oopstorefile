@@ -1,16 +1,24 @@
 <?php
 
+use Classes\categories;
+use Classes\DB;
+use Classes\Post;
+
+$db = new DB();
+$posts = new Post($db->conn);
+
+
 if(count($_POST) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['short_description'])  && isset($_POST['description']) && !empty($_POST['select_cate'])) {
-  updatePost($_POST['id'], $_POST['title'], $_POST['short_description'], $_POST['description'],$_POST['select_cate']);
+  $posts->updatePost($_POST['id'], $_POST['title'], $_POST['short_description'], $_POST['description'],$_POST['select_cate']);
   		 
 }
 
 if(count($_GET) && isset($_GET['edit_post']) && is_numeric($_GET['edit_post'])) {
-  $result = getPosts($_GET['edit_post']);
-  $post = mysqli_fetch_assoc($result);
+  $result = $posts->find($_GET['edit_post']);
+  $post = $result->fetch();
 }
-
-$category = getCate();
+$categories_get =  new categories($db->conn);
+$category = $categories_get->all();
 ?>
     <!-- Main content -->
     <div class="content">
@@ -31,7 +39,7 @@ $category = getCate();
                     <label>انتخاب دسته بندی برای پست</label>
                     <select class="form-control" name="select_cate">
                       <option >انتخاب کنید</option>
-                      <?php while($row=mysqli_fetch_assoc($category)) { ?>
+                      <?php while($row=$category->fetch()) { ?>
                       <option value="<?= $row['id'] ?>" <?= $row['id'] == $post['categories_id'] ? 'selected' : '' ?>><?= $row['title'] ?></option>
                       <?php
                       }
