@@ -54,8 +54,8 @@ $posts = $getposts->all();
                             <td><?= mb_substr($post['description'], 0, 25) . ' ...' ?></td>
                             <td><?= $post['created_at'] ?></td>
                             <td class="d-flex justify-content-around">
-                                <a href="dashboard.php?edit_post=<?= $post['id'] ?>" class="fa fa-edit fa-2x "></a> 
-                                <a href="dashboard.php?del_post=<?= $post['id'] ?>" onclick="return confirm('Do you sure?');" class="fa fa-times fa-2x mr-1" style="color: red;"></a> 
+                                <a href="dashboard.php?edit_post=<?= $post['id'] ?>" class="fa fa-edit fa-2x " data-toggle="tooltip" data-placement="top" title="ویرایش"></a>
+                                <a href="dashboard.php?del_post=<?= $post['id'] ?>" onclick="return confirm('Do you sure?');" class="fa fa-times fa-2x mr-1" style="color: red;" data-toggle="tooltip" data-placement="top" title="حذف"></a>
                             </td>
                         <?php
                     }

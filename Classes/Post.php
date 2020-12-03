@@ -47,5 +47,17 @@ class Post extends Model
             echo "<script>alert('آپبود فایل درست انجام نشد')</script>";
         }
     }
+    function getPostsForIndex( $limit = null, $orderBy = null, $orderType = 'ASC') {
+
+        $query = "SELECT P.* FROM `posts` AS P JOIN `categories` AS C  ON P.`categories_id`=C.`id`  WHERE C.`show_at_index` = 1";
+        if(!is_null($orderBy)) {
+            $query .= " ORDER BY `" . $orderBy . "` " . $orderType;
+        }
+        if(!is_null($limit)){
+            $query .= " LIMIT " . $limit;
+        }
+        return $this->conn->query($query);
+
+    }
 
 }

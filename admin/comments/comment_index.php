@@ -42,7 +42,7 @@ $comment_all=$comment->all();
                             ?>
                             <tr>
                                 <td><?= $i++ ?></td>
-                                <td><a href="../single.php?id=<?= $com['post_id'] ?>"> <?= $com['post_id'] ?></a></td>
+                                <td><a href="../post.php?id=<?= $com['post_id'] ?>"> <?= $com['post_id'] ?></a></td>
                                 <td><?= $com['name'] ?></td>
                                 <td><?= $com['mobile'] ? $com['mobile'] : 'ندارد' ?></td>
                                 <td><?= $com['is_confirm'] ? 'بله' : 'خیر' ?></td>
@@ -62,10 +62,6 @@ $comment_all=$comment->all();
                 <!--/.col (right) -->
             </div>
         </div>
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+
 </body>
 </html>

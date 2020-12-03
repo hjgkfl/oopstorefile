@@ -107,5 +107,10 @@ require_once("includes/functions.php");
     $('#posts_table').DataTable();
   });
 </script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 </body>
 </html>

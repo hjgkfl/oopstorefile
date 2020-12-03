@@ -3,8 +3,8 @@
 use Classes\Comment;
 use Classes\DB;
 
-$sb = new DB();
-$comment = new Comment();
+$db = new DB();
+$comment = new Comment($db->conn);
 
 if(count($_POST) && isset($_POST['description']) && !isset($_POST['parent_id']))
 {
@@ -17,9 +17,8 @@ if(isset($_POST['description']) && isset($_POST['parent_id']) && isset($_POST['p
 }
 if(count($_GET) && isset($_GET['edit_comment']) && is_numeric($_GET['edit_comment']) || isset($_GET['reply']))
 {
-    $id=$_GET['edit_comment'];
-    $select_c=getComment($_GET['edit_comment'],null);
-    $row=mysqli_fetch_array($select_c);
+    $select_c=$comment->find($_GET['edit_comment']);
+    $row=$select_c->fetch();
 }
 
 ?>

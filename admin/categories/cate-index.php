@@ -57,8 +57,8 @@ $cate=$categories_get->all();
                             <td><?= $row['show_at_index'] ? 'بله':'خیر'?></td>
                             <td><?= $row['create_at']?> </td>
                             <td><?= $row['comment']?> </td>
-                            <td class="d-flex justify-content-center"><a href="dashboard.php?id=<?= $row['id'] ?>" class="fa fa-edit fa-2x "></a>
-                                <a href="dashboard.php?delete=<?= $row['id'] ?>" onClick="return confirm('آیا مطمئنی برای حذف ?')" class="fa fa-close fa-2x mr-2 text-danger"></a> </td>
+                            <td class="d-flex justify-content-center"><a href="dashboard.php?id=<?= $row['id'] ?>" class="fa fa-edit fa-2x " data-toggle="tooltip" data-placement="top" title="ویرایش"></a>
+                                <a href="dashboard.php?delete=<?= $row['id'] ?>" onClick="return confirm('آیا مطمئنی برای حذف ?')" class="fa fa-close fa-2x mr-2 text-danger" data-toggle="tooltip" data-placement="top" title="حذف"></a> </td>
 
                         </tr>
                         <?php
