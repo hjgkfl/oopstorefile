@@ -14,7 +14,7 @@ if(count($_GET) && isset($_GET['id']) && is_numeric($_GET['id'])) {
     $post = $post_obj->find($_GET['id']);
     $post = $post->fetch();
 
-    if(is_null($post)) {
+    if($post == false) {
         header('Location: index.php');
         exit;
     }
@@ -48,7 +48,7 @@ $comments = $comment_obj->getPostComment($post['id']);
 </head>
 <body>
 <?php
-require_once 'front_layouts/header.php'
+require_once 'front_layouts/header.php';
 ?>
 <main class="rtl mt-3">
     <div class="container">
@@ -150,7 +150,7 @@ require_once 'front_layouts/header.php'
                         <?php
 
                         //comment-answer
-                        $parent_c=$comment_obj->getPostComment($post['id'],$row_page['parent_id']);
+                        $parent_c=$comment_obj->getPostComment($post['id'],$row_page['id']);
                         if($parent_c == true)
                         {
                             while($comment_parent=$parent_c->fetch()) { ?>
@@ -194,7 +194,6 @@ require_once 'front_layouts/header.php'
                     ?>
 
                     <?php
-                    $i=1;
                     $comment_list=$comment_obj->getPostComment($post['id'],null);
                     //comment all
                     while($run_is_C=$comment_list->fetch())
@@ -320,7 +319,7 @@ require_once 'front_layouts/header.php'
                             <?php for($k=$i;$k<=$i;$k++)
                             {
                                 ?>
-                                <a class="page-link bg-primary text-light" href="<?php $page=$i == 1 ? "single.php?id=$id" : "single.php?id=$id & page=$i" ; echo $page;  ?>"><?= $i?></a>
+                                <a class="page-link bg-primary text-light" href="<?php $page=$i == 1 ? "post.php?id=$id" : "post.php?id=$id & page=$i" ; echo $page;  ?>"><?= $i?></a>
                                 <?php
                             }
                             echo "</li>";
