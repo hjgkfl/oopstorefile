@@ -1,10 +1,16 @@
 
 <?php
 
+use Classes\categories;
+use Classes\DB;
+
+$db= new DB();
+$categories_get =  new categories($db->conn);
+
 if(count($_POST) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['comment']) && isset($_POST['parent_id']))
 {
     $show_at_index=isset($_POST['show_at_index']) ? 1 : 0;
-    $update_true=updateCate($_POST['id'],$_POST['title'],$show_at_index,$_POST['comment'],$_POST['parent_id']);
+    $update_true=$categories_get->updateCate($_POST['id'],$_POST['title'],$show_at_index,$_POST['comment'],$_POST['parent_id']);
     if($update_true == true)
     {
         echo "<script>alert('دسته شما بروز شد')</script>";
@@ -12,10 +18,11 @@ if(count($_POST) && isset($_POST['id']) && isset($_POST['title']) && isset($_POS
 }
 if(count($_GET) && isset($_GET['id']) && is_numeric($_GET['id']))
 {
-    $result = getCate($_GET['id']);
-    $cate = mysqli_fetch_assoc($result);
+    $result = $categories_get->find($_GET['id']);;
+    $cate = $result->fetch();
 }
-$getcate = getCate();
+
+$getcate = $categories_get->all();
 
 ?>
 
@@ -45,6 +52,8 @@ $getcate = getCate();
                             <label for="description">توضیحات </label>
                             <textarea name="comment" style="width: 630px;height: 100px;" class="form-control" id="comment" ><?= $cate['comment']  ?></textarea>
                         </div>
+
+                    <!-- start Under Construction   -->
                         <div class="form-group">
                             <label for="description">دسته مادر </label>
                             <select name="parent_id" class="form-control" id="description">
@@ -52,9 +61,9 @@ $getcate = getCate();
 
                                 <?php
 
-                                while($row=mysqli_fetch_array($getcate))
+                                while($row=$getcate->fetch())
                                 {
-                                    $id_cate=getCate(null,null,$row['id']);
+                                    $id_cate=$categories_get->find($row['id']);
                                     $row_id=mysqli_fetch_array($id_cate);
                                     ?>
                                     <option value='<?= $row['id']?>' <?= $row_id['parent_id'] == $row['id']  ? 'selected' : '' ?>><?= $row['title']?></option>
@@ -64,6 +73,7 @@ $getcate = getCate();
 
                             </select>
                         </div>
+                        <!-- end Under Construction   -->
                         <div class="form-group">
                             <label for="show_at_index">نمایش در صفحه اصلی</label>
                             <input type="checkbox" name="show_at_index" value="1" <?= $cate['show_at_index'] ? 'checked' : '' ?> class="mr-2" id="show_at_index">
