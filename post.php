@@ -75,14 +75,14 @@ require_once 'front_layouts/header.php'
 
                 if(count($_GET) && isset($_GET['page']) && is_numeric($_GET['page']))
                 {
-                    $page_navi_c=commentCount($_GET['page']);
-                    $run_page=pageNavi($id,0,5,$page_navi_c);
-                    $count_page=mysqli_num_rows($run_page);
+                    $page_navi_c=$comment_obj->commentCount($_GET['page']);
+                    $run_page=$comment_obj->pageNavi($_GET['id'],0,5,$page_navi_c);
+                    $count_page=$run_page->rowCount();
                     if($count_page == 0)
                     {
                         echo "<script>window.open('index.php','_self')</script>";
                     }
-                    while($row_page=mysqli_fetch_array($run_page))
+                    while($row_page=$run_page->fetch())
                     {
 
                         ?>
@@ -118,7 +118,7 @@ require_once 'front_layouts/header.php'
                                 <form action="" method="post" class="mt-3">
                                     <h4 class="text-warning">پاسخ به نظر : <?= $row_page['name'] ?></h4>
                                     <input type="hidden" name="parent_id" value="<?= $row_page['id']?>">
-                                    <input type="hidden" name="id_page" value="<?= $_GET['id']?>">
+                                    <input type="hidden" name="id_page" value="<?= $post['id']?>">
 
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
@@ -150,10 +150,10 @@ require_once 'front_layouts/header.php'
                         <?php
 
                         //comment-answer
-                        $parent_c=getComment($_GET['id'],1,null,$row_page['id']);
+                        $parent_c=$comment_obj->getPostComment($post['id'],$row_page['parent_id']);
                         if($parent_c == true)
                         {
-                            while($comment_parent=mysqli_fetch_array($parent_c)) { ?>
+                            while($comment_parent=$parent_c->fetch()) { ?>
 
                                 <div class="user-block bg-dark d-flex justify-content-start mt-5 col-8 rounded" style="margin-right: 100px;">
                                     <div class=" d-flex flex-column align-items-center rounded-right " style="width: 140px;height: 200px;">
@@ -185,8 +185,8 @@ require_once 'front_layouts/header.php'
 
                 else {
 
-                    $run_page=getComment($_GET['id'],1,null);
-                    $count_page=mysqli_num_rows($run_page);
+                    $run_page=$comment_obj->getPostComment($post['id']);
+                    $count_page=$run_page->rowCount();
                     if($count_page == 0)
                     {
                         echo "<b class='text-center text-danger '>نظری برای این پست وجود ندارد</b>";
@@ -195,8 +195,9 @@ require_once 'front_layouts/header.php'
 
                     <?php
                     $i=1;
+                    $comment_list=$comment_obj->getPostComment($post['id'],null);
                     //comment all
-                    while($run_is_C=mysqli_fetch_array($comment_is_c))
+                    while($run_is_C=$comment_list->fetch())
                     {
 
                         ?>
@@ -228,10 +229,10 @@ require_once 'front_layouts/header.php'
 
                             <?php
                             //comment-answer
-                            $parent_c=getComment($_GET['id'],1,null,$run_is_C['id']);
+                            $parent_c=$comment_obj->getPostComment($post['id'],$run_is_C['id']);
                             if($parent_c == true)
                             {
-                                while($comment_parent=mysqli_fetch_array($parent_c)) { ?>
+                                while($comment_parent=$parent_c->fetch()) { ?>
 
                                     <div class="user-block bg-dark d-flex justify-content-start mt-5 col-8 rounded" style="margin-right: 100px;">
                                         <div class=" d-flex flex-column align-items-center rounded-right " style="width: 140px;height: 200px;">
@@ -262,7 +263,7 @@ require_once 'front_layouts/header.php'
                                 <form action="" method="post" class="mt-3">
                                     <h4 class="text-warning">پاسخ به نظر : <?= $run_is_C['name'] ?></h4>
                                     <input type="hidden" name="parent_id" value="<?= $run_is_C['id'] ?>">
-                                    <input type="hidden" name="id_page" value="<?= $_GET['id']?>">
+                                    <input type="hidden" name="id_page" value="<?= $post['id']?>">
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="inputName4"><i class="text-danger">*</i> نام</label>
@@ -296,14 +297,14 @@ require_once 'front_layouts/header.php'
                 }
                 ?>
                 <?php
-                $select=getComment($_GET['id'],1,null,0);
-                $c=mysqli_num_rows($select);
+                $comment_l=$comment_obj->getPostComment($post['id'],null);
+                $c=$comment_l->rowCount();
                 ?>
                 <div class="card-footer clearfix d-flex justify-content-center ">
                     <ul class="pagination pagination-sm m-0 float-right">
 
                         <?php
-
+                       $id=$post['id'];
                         $r=$c / 5;
                         if(is_float($r))
                         {
@@ -334,7 +335,7 @@ require_once 'front_layouts/header.php'
 
             <h5 class="mb-3 mt-5">ثبت نظرات</h5>
             <form action="" method="post" data-toggle="collapse">
-                <input type="hidden" name="id_page" value="<?= $_GET['id']?>">
+                <input type="hidden" name="id_page" value="<?= $post['id']?>">
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="inputName4"><i class="text-danger">*</i> نام</label>
