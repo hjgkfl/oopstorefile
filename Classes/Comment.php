@@ -8,14 +8,17 @@ class Comment extends Model
     {
         return $this->conn->query("SELECT * FROM `comments`");
     }
-
+    public function find($id)
+    {
+        return $this->conn->query("SELECT * FROM `comments` WHERE id='{$id}'");
+    }
     public function getPostComment($post_id, $parent_id = NULL)
     {
-        $query = "SELECT * FROM `comments` WHERE `post_id` = '{$post_id}' AND `is_confirm` = 1 ";
+        $query = "SELECT * FROM `comments` WHERE `post_id` = '{$post_id}' AND `is_confirm` = 1";
         if(is_null($parent_id)) {
-            $query .= " AND `parent_id` = '0'";
+            $query .= " AND `parent_id` = '0' ";
         } else {
-            $query .= " AND `parent_id` = '{$parent_id}' ";
+            $query .= " AND `parent_id` = '{$parent_id}'";
         }
         return $this->conn->query($query);
     }
