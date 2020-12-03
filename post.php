@@ -19,7 +19,9 @@ if(count($_GET) && isset($_GET['id']) && is_numeric($_GET['id'])) {
         exit;
     }
 
-    $post_obj->calculateCountViews();
+
+    $post_obj->calculateCountViews($_GET['id']);
+
 } else {
     header('Location: index.php');
     exit;

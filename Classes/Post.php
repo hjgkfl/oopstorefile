@@ -14,10 +14,26 @@ class Post extends Model
         return $this->conn->query("SELECT * FROM `posts` WHERE id='{$id}'");
     }
 
-    public function calculateCountViews()
-    {
-        // implement calculateCountViews function ...
+    public function calculateCountViews($post_id) {
+
+        $viewed_pages = [];
+        if(isset($_COOKIE['viewed_pages'])) {
+            $viewed_pages = json_decode($_COOKIE['viewed_pages'], true);
+        }
+        if(!in_array($post_id, $viewed_pages)) {
+
+            $query = "UPDATE `posts` SET 
+        `count_views` = `count_views` + 1
+         WHERE `id` = '{$post_id}'";
+
+            $result = $this->conn->query($query);
+            $viewed_pages[] = $post_id;
+            setcookie('viewed_pages', json_encode($viewed_pages), time() + 3 * 24 * 3600);
+        }
+        return $result;
+
     }
+
     function updatePost($id, $title, $short_description, $description,$select_cate)
     {
         $query = "UPDATE `posts` SET 
