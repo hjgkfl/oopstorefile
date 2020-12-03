@@ -25,7 +25,7 @@ class Comment extends Model
         $query = "INSERT INTO `comments` VALUES
      (NULL,  '{$params['post_id']}','{$params['parent_id']}','{$params['name']}','{$params['mobile']}','{$params['email']}','{$params['description']}', '0', '" . date('Y-m-d H:i:s') . "')";
 
-        $this->conn->query($query);
+        return $this->conn->query($query);
     }
 
     public function pageNavi($post_id,$parent_id,$limit,$offset)
