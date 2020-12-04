@@ -141,7 +141,6 @@ $getcate=getCate(null,3);
             }
             else{
 
-
             ?>
             <?php
                ?>
@@ -151,10 +150,12 @@ $getcate=getCate(null,3);
             <?php
             }
             ?>
-
-
-
-
+            <li class="drop rounded">
+                <a class="nav-link" href="about.php">درباره ما <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="drop rounded">
+                <a class="nav-link" href="contact.php">تماس با ما <span class="sr-only">(current)</span></a>
+            </li>
 
         </ul>
     </div>
