@@ -13,7 +13,14 @@ class Post extends Model
     {
         return $this->conn->query("SELECT * FROM `posts` WHERE id='{$id}'");
     }
+    public function findCatePost($cate_id)
+    {
+        $query = " SELECT P.`title`,P.`categories_id`,P.`pic_url`,P.`id`,P.`short_description`,P.`description`,C.`id` AS `c_id`
+        FROM `posts` 
+         AS P JOIN `categories` AS C ON P.`categories_id` = C.`id` WHERE C.`id`=$cate_id";
+        return $this->conn->query($query);
 
+    }
     public function calculateCountViews($post_id) {
 
         $viewed_pages = [];
