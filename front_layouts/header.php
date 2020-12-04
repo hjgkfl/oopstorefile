@@ -1,6 +1,15 @@
 <?php
-require_once 'admin/includes/functions.php';
-$getcate=getCate(null,3);
+session_start();
+
+use Classes\Categories;
+use Classes\DB;
+
+require_once 'config.php';
+
+$db = new DB();
+$cate_limit = new Categories($db->conn);
+$get_cate=$cate_limit->limitCate(3);
+
 ?>
 <style>
     ul{
@@ -103,35 +112,18 @@ $getcate=getCate(null,3);
             </li>
             <?php
 
-            while ($row=mysqli_fetch_array($getcate))
+            while ($row=$get_cate->fetch())
             {
                 ?>
 
                 <li class="drop rounded">
                     <a class="nav-link text-light" href="category_post.php?id_cate=<?= $row['id'] ?>"><?= $row['title'] ?></a>
+                </li>
 
 
             <?php
-
-              echo '<ul class="sub_menu">';
-
-            $catemenu=menuCate($row['id']);
-            while($row_catemenu=mysqli_fetch_array($catemenu))
-            {
-                ?>
-                <li><a href="#"><?= $row_catemenu['title']?></a></li>
-
-
-                <?php
-
-             }
-            echo'</ul>
-             </li>';
             }
-            ?>
-
-            <?php
-            if($_SESSION['user_status'] == 0)
+            if(isset($_SESSION['login']) && $_SESSION['user_status'] == 0)
             {
                 ?>
                 <li class="drop rounded">
@@ -139,11 +131,8 @@ $getcate=getCate(null,3);
                 </li>
                 <?php
             }
-            else{
-
-
-                ?>
-                <?php
+            else
+                {
                 ?>
                 <li class="drop rounded">
                     <a class="nav-link" href="admin/dashboard.php">حساب من <span class="sr-only">(current)</span></a>
