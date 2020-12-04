@@ -46,5 +46,10 @@ class login extends Model
         return $error;
 
     }
+    function logout()
+    {
+        unset($_SESSION['login']);
+
+    }
 
 }

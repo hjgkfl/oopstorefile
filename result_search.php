@@ -52,6 +52,7 @@ require_once("style.html");
                     <div class="card-footer d-flex justify-content-around">
                         <i class="font-weight-bold text-success">25,000 تومان</i>
                         <i class="fa fa-low-vision fa-1x text-danger"><?= $row['count_views'] ?></i>
+                        <i class="fa fa-check-circle-o fa-1x text-danger"><?= $row['count_views'] ?></i>
                     </div>
                     <div class="card-footer">
                         <a href="post.php?id=<?= $row['id'] ?>" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
