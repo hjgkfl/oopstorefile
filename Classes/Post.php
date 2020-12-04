@@ -34,7 +34,7 @@ class Post extends Model
 
     }
 
-    function updatePost($id, $title, $short_description, $description,$select_cate)
+    public function updatePost($id, $title, $short_description, $description,$select_cate)
     {
         $query = "UPDATE `posts` SET 
         `categories_id` = '{$select_cate}',
@@ -45,7 +45,7 @@ class Post extends Model
         return $this->conn->query($query);
 
     }
-    function storePost($title,$short_description,$description,$file,$select_cate)
+    public function storePost($title,$short_description,$description,$file,$select_cate)
     {
         $extension = explode('.', $file);
         $extension = end($extension);
@@ -63,7 +63,7 @@ class Post extends Model
             echo "<script>alert('آپبود فایل درست انجام نشد')</script>";
         }
     }
-    function getPostsForIndex( $limit = null, $orderBy = null, $orderType = 'ASC') {
+    public function getPostsForIndex( $limit = null, $orderBy = null, $orderType = 'ASC') {
 
         $query = "SELECT P.* FROM `posts` AS P JOIN `categories` AS C  ON P.`categories_id`=C.`id`  WHERE C.`show_at_index` = 1";
         if(!is_null($orderBy)) {
@@ -74,6 +74,18 @@ class Post extends Model
         }
         return $this->conn->query($query);
 
+    }
+
+    public function searchPost($search)
+    {
+        $query = "SELECT * FROM `posts` WHERE `description` LIKE  '%$search%' ";
+        $result=$this->conn->query($query);
+        $num_rows_result=$result->rowCount();
+        if($num_rows_result == 0)
+        {
+            echo "<script>window.open('404.php','_self')</script>";
+        }
+        return $result;
     }
 
 }
