@@ -1,5 +1,12 @@
 <?php
-require_once("admin/includes/functions.php");
+use Classes\DB;
+use Classes\Post;
+
+require_once 'config.php';
+
+$db =new DB();
+$post_obj = new Post($db->conn);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,29 +23,28 @@ require_once("admin/includes/functions.php");
 
 <?php
 require_once("front_layouts/header.php");
+require_once("style.html");
+
 if(count($_GET) && isset($_GET['id_cate']) && is_numeric($_GET['id_cate']))
 {
-    $get_cate_id = getPosts(null,$_GET['id_cate']);
-    $num_rows=mysqli_num_rows($get_cate_id);
+    $get_cate_id = $post_obj->findCatePost($_GET['id_cate']);
+    $num_rows=$get_cate_id->rowCount();
     if($num_rows == 0) {
-        header('Location: 404.php');
+        echo "<script>window.open('404.php','_self')</script>";
         exit;
     }
 }
 else {
-    header('Location: 404.php');
+    echo "<script>window.open('404.php','_self')</script>";
     exit;
 }
 
 ?>
 
 <main class="rtl mt-3 col-12">
-    <div class="d-flex justify-content-center flex-wrap">
+    <div class="d-flex justify-content-center flex-wrap card-3d-all">
         <?php
-
-        if(!isset($_POST['search']) && empty($_POST['search'])) {
-
-        while($run_get_cate = mysqli_fetch_assoc($get_cate_id))
+        while($run_get_cate = $get_cate_id->fetch())
         {
             ?>
             <div class="card m-2 3d-card" style="width: 18rem;">
@@ -53,19 +59,12 @@ else {
                 </div>
                 <div class="card-footer">
                     <p class="text-success text-center">25,000 تومان</p>
-                    <a href="single.php?id=<?= $run_get_cate['id'] ?>" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
+                    <a href="post.php?id=<?= $run_get_cate['id'] ?>" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
                 </div>
             </div>
 
             <?php
             }
-            }
-        else{
-                while ($run_search = mysqli_fetch_array($search)) {
-                    require_once 'result_search.php';
-                }
-            }
-
         ?>
 
     </div>
