@@ -131,7 +131,7 @@ $getcate=getCate(null,3);
             ?>
 
             <?php
-            if(isset($_SESSION['user_status']) == 0)
+            if($_SESSION['user_status'] == 0)
             {
                 ?>
                 <li class="drop rounded">
