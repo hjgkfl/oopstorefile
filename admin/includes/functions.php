@@ -270,7 +270,7 @@ function commentCount($page)
 function searchPost($search)
 {
     global $link;
-    $query = "SELECT * FROM `posts` WHERE `post_keywords` LIKE  '%$search%' ";
+    $query = "SELECT * FROM `posts` WHERE `description` LIKE  '%$search%' ";
     $result=mysqli_query($link,$query);
     $num_rows_result=mysqli_num_rows($result);
     $result=$num_rows_result == 0 ?  header('location:404.php') : $result;

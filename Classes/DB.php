@@ -2,7 +2,6 @@
 
 namespace Classes;
 
-
 class DB {
 
     public $conn;

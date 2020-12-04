@@ -10,7 +10,7 @@ $db =new DB();
 
 $post_obj = new Post($db->conn);
 
-if(count($_GET) && isset($_GET['id']) && is_numeric($_GET['id'])) {
+if((isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) || isset($_GET['page'])) {
     $post = $post_obj->find($_GET['id']);
     $post = $post->fetch();
 
@@ -29,10 +29,22 @@ if(count($_GET) && isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 $comment_obj = new Comment($db->conn);
 
-if(count($_POST)) {
-    $comment_obj->store($_POST);
+if(count($_POST) && isset($_POST['fname']) && isset($_POST['description']))
+{
+    if(empty($_POST['fname']))
+    {
+        echo errors(' نام خود را وارد نکردید');
+    }
+    else if(empty($_POST['description']))
+    {
+        echo errors('توضیحات خود را وارد نکردید');
+    }
+    else {
+        $parent_id=isset($_POST['parent_id']) ? $_POST['parent_id'] : '0';
+        $comment_obj->storeComment($_POST['fname'], $_POST['description'], $_POST['id_page'], $_POST['email'], $_POST['phone'] , $parent_id );
+        echo "<script> alert('نظر شما ثبت شد پس از بررسی در سایت قرار خواهد گرفت')</script>";
+    }
 }
-
 $comments = $comment_obj->getPostComment($post['id']);
 
 
@@ -43,10 +55,17 @@ $comments = $comment_obj->getPostComment($post['id']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= $post['title'] ?></title>
+    <title>مقاله انرژی های تجدید پذیر</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="admin/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="admin/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet" href="./node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css">
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css.min.css">
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
 <?php
@@ -196,7 +215,7 @@ require_once 'front_layouts/header.php';
                     ?>
 
                     <?php
-                    $comment_list=$comment_obj->getPostComment($post['id'],null);
+                    $comment_list=$comment_obj->getPostComment($post['id'],0);
                     //comment all
                     while($run_is_C=$comment_list->fetch())
                     {
@@ -362,8 +381,6 @@ require_once 'front_layouts/header.php';
         </article>
     </div>
 </main>
-
-
 <?php require_once("front_layouts/footer.php"); ?>
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script src="./popper.min.js"></script>
@@ -384,4 +401,4 @@ require_once 'front_layouts/header.php';
     });
 </script>
 </body>
-</html></html>
+</html>
