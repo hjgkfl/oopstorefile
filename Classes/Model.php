@@ -11,4 +11,11 @@ class Model
     {
         $this->conn = $conn;
     }
+    function echoError($error,$c)
+    {
+        for($i=0;$i<$c;$i++)
+        {
+            echo "<script>alert('$error[$i]')</script>";
+        }
+    }
 }
