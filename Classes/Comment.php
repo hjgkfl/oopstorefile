@@ -14,7 +14,7 @@ class Comment extends Model
     }
     public function getPostComment($post_id, $parent_id = NULL)
     {
-        $query = "SELECT * FROM `comments` WHERE `post_id` = '{$post_id}' AND `is_confirm` = 1";
+        $query = "SELECT * FROM `comments` WHERE `post_id` = '{$post_id}' AND `is_confirm` = 1 ";
         if(is_null($parent_id)) {
             $query .= " AND `parent_id` = '0' ";
         } else {
@@ -23,11 +23,9 @@ class Comment extends Model
         return $this->conn->query($query);
     }
 
-    public function store($params)
+    public function storeComment($name_comment,$description_comment,$post_id,$email,$phone,$parent_id)
     {
-        $query = "INSERT INTO `comments` VALUES
-     (NULL,  '{$params['post_id']}','{$params['parent_id']}','{$params['name']}','{$params['mobile']}','{$params['email']}','{$params['description']}', '0', '" . date('Y-m-d H:i:s') . "')";
-
+        $query = "INSERT INTO `comments` (`post_id`,`parent_id`,`name`,`mobile`,`email`,`description`,`created_at`) VALUES('{$post_id}','{$parent_id}','{$name_comment}','{$phone}','{$email}','{$description_comment}','" . date('Y-m-d H:i:s') . "')";
         return $this->conn->query($query);
     }
 
