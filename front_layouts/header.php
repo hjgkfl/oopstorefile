@@ -131,8 +131,19 @@ $getcate=getCate(null,3);
             ?>
 
             <?php
-            if(isset($_SESSION['login']) == 1)
+            if($_SESSION['user_status'] == 0)
             {
+                ?>
+                <li class="drop rounded">
+                    <a class="nav-link" href="users/index.php">حساب من <span class="sr-only">(current)</span></a>
+                </li>
+                <?php
+            }
+            else{
+
+
+                ?>
+                <?php
                 ?>
                 <li class="drop rounded">
                     <a class="nav-link" href="admin/dashboard.php">حساب من <span class="sr-only">(current)</span></a>
@@ -140,6 +151,7 @@ $getcate=getCate(null,3);
                 <?php
             }
             ?>
+
 
 
 
