@@ -1,5 +1,12 @@
 <?php
-session_start();
+use Classes\DB;
+use Classes\login;
+
+require_once '../config.php';
+
+$db = new DB();
+$logout = new login($db->conn);
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
@@ -40,8 +47,8 @@ session_start();
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
 	<?php
-	
-	isset($_GET['get_cate']) ? require_once("categories/cate-index.php") : '';
+
+    isset($_GET['get_cate']) ? require_once("categories/cate-index.php") : '';
 	isset($_GET['insert_cate']) ? require_once("categories/cate-insert.php") : '';
 	isset($_GET['id']) ? require_once("categories/cate-edit.php") : '';
 	isset($_GET['delete']) ? require_once("categories/cate-index.php") : '';
@@ -55,7 +62,7 @@ session_start();
     isset($_GET['get_user']) ? require_once("users/user_index.php") : '' ;
     if(isset($_GET['logout']))
     {
-        logout();
+        $logout->logout();
         echo "<script>window.open('../login.php','_self')</script>";
     }
     ?>
