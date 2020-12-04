@@ -1,0 +1,35 @@
+@font-face {
+    font-family: ashkan;
+    src: url(font/Kourosh.woff);
+
+}
+@keyframes example {
+    0%   {border: 3px solid coral;}
+    25%  {border: 3px solid green;}
+    50%  {border: 3px solid cornsilk;}
+    100% {border: 3px solid cyan;}
+
+}
+.anim-b
+{
+    animation-name: example;
+    animation-duration: 1s;
+    animation-iteration-count: infinite
+}
+.f-ashkan
+{
+    font-family: ashkan;
+    font-size: 16px;
+    color: rgba(0,0,0,0.7);
+}
+.f-ashkan-lg
+{
+    font-family: ashkan;
+    font-size: 22px;
+    color: rgba(0,0,0,0.7);
+}
+.date-user
+{
+  width: 100%;
+    height: 250px;
+}
