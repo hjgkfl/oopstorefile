@@ -40,6 +40,7 @@
 
 <?php
 
+require_once("front_layouts/header.php");
 
 use Classes\DB;
 use Classes\Post;
@@ -49,7 +50,7 @@ require_once 'config.php';
 $db = new DB();
 $posts = new Post($db->conn);
 
-require_once("front_layouts/header.php");
+
 
 $post = $posts->getPostsForIndex(10, 'id', 'DESC');
 ?>

@@ -1,5 +1,12 @@
 <?php
-require_once("admin/includes/functions.php");
+
+use Classes\DB;
+use Classes\Post;
+
+require_once 'config.php';
+
+$db = new DB();
+$post = new Post($db->conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +35,8 @@ require_once("front_layouts/header.php");
         <?php
         if(isset($_GET['search'])  && !empty($_GET['search']) )
         {
-            $search=searchPost($_GET['search']);
-            while($row=mysqli_fetch_array($search))
+            $search=$post->searchPost($_GET['search']);
+            while($row=$search->fetch())
             {
 
                 ?>
@@ -48,7 +55,7 @@ require_once("front_layouts/header.php");
                         <i class="fa fa-low-vision fa-1x text-danger"><?= $row['count_views'] ?></i>
                     </div>
                     <div class="card-footer">
-                        <a href="single.php?id=<?= $row['id'] ?>" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
+                        <a href="post.php?id=<?= $row['id'] ?>" class="btn btn-outline-secondary btn-block">ادامه مطلب</a>
                     </div>
                 </div>
 
