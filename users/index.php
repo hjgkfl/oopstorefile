@@ -18,6 +18,8 @@
 
 <?php
 
+session_start();
+
 use Classes\DB;
 use Classes\User;
 
@@ -27,6 +29,7 @@ $db = new DB();
 $User = new User($db->conn);
 
 require_once 'user_layout/header.php';
+
 
 if (isset($_SESSION['login'])) {
 

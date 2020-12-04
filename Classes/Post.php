@@ -26,11 +26,11 @@ class Post extends Model
         `count_views` = `count_views` + 1
          WHERE `id` = '{$post_id}'";
 
-            $result = $this->conn->query($query);
+            return  $this->conn->query($query);
             $viewed_pages[] = $post_id;
             setcookie('viewed_pages', json_encode($viewed_pages), time() + 3 * 24 * 3600);
         }
-        return $result;
+
 
     }
 
