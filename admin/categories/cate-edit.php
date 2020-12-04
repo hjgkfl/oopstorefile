@@ -55,9 +55,9 @@ $getcate = $categories_get->all();
 
                     <!-- start Under Construction   -->
                         <div class="form-group">
-                            <label for="description">دسته مادر </label>
-                            <select name="parent_id" class="form-control" id="description">
-                                <option value='0'>انتخاب كنيد</option>
+                            <label for="description" disabled="">دسته مادر </label>
+                            <select name="parent_id" class="form-control" id="description" disabled>
+                                <option value='0'>در حال ساخت دسته مادر</option>
 
                                 <?php
 

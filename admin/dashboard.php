@@ -52,6 +52,7 @@ session_start();
     isset($_GET['comment']) ? require_once("comments/comment_index.php") : '' ;
     isset($_GET['edit_comment']) ? require_once("comments/comment_edit.php") : '' ;
     isset($_GET['del_comment']) ? require_once("comments/comment_index.php") : '' ;
+    isset($_GET['get_user']) ? require_once("users/user_index.php") : '' ;
     if(isset($_GET['logout']))
     {
         logout();
