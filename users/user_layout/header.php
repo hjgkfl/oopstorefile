@@ -1,6 +1,11 @@
 <?php
-require_once '../admin/includes/functions.php';
-$getcate=getCate(null,3);
+
+use Classes\DB;
+use Classes\Categories;
+
+$db = new DB();
+$cate_limit = new Categories($db->conn);
+$get_cate=$cate_limit->limitCate(3);
 ?>
 <style>
     ul{
@@ -97,64 +102,47 @@ $getcate=getCate(null,3);
 
     </nav>
     <div style="width: 100%;height: 65px;" class="bg-dark d-flex justify-content-center">
-        <ul class="dropdown mr-5 d-flex justify-content-center" >
+        <ul class="dropdown mr-0 d-flex justify-content-center" >
             <li class="drop rounded">
-                <a class="nav-link text-light" href="../index.php">صفحه اصلی</a>
+                <a class="nav-link text-light font-weight-bold" href="../index.php">صفحه اصلی</a>
             </li>
             <?php
 
-            while ($row=mysqli_fetch_array($getcate))
+            while ($row=$get_cate->fetch())
             {
                 ?>
 
                 <li class="drop rounded">
-                    <a class="nav-link text-light" href="../category_post.php?id_cate=<?= $row['id'] ?>"><?= $row['title'] ?></a>
-
+                    <a class="nav-link text-light font-weight-bold" href="../category_post.php?id_cate=<?= $row['id'] ?>"><?= $row['title'] ?></a>
+                </li>
 
             <?php
-
-              echo '<ul class="sub_menu">';
-
-            $catemenu=menuCate($row['id']);
-            while($row_catemenu=mysqli_fetch_array($catemenu))
-            {
-                ?>
-                <li><a href="#"><?= $row_catemenu['title']?></a></li>
-
-
-                <?php
-
-             }
-            echo'</ul>
-             </li>';
             }
             ?>
-
             <?php
-            if($_SESSION['user_status'] == 0)
+            if(isset($_SESSION['login']) && $_SESSION['user_status'] == 0)
             {
                 ?>
                 <li class="drop rounded">
-                    <a class="nav-link" href="index.php">حساب من <span class="sr-only">(current)</span></a>
+                    <a class="nav-link font-weight-bold" href="index.php">حساب من <span class="sr-only">(current)</span></a>
                 </li>
                 <?php
             }
             else{
 
             ?>
-            <?php
-               ?>
+
                 <li class="drop rounded">
-                    <a class="nav-link" href="admin/dashboard.php">حساب من <span class="sr-only">(current)</span></a>
+                    <a class="nav-link font-weight-bold" href="../admin/dashboard.php">حساب من <span class="sr-only">(current)</span></a>
                 </li>
             <?php
             }
             ?>
             <li class="drop rounded">
-                <a class="nav-link" href="about.php">درباره ما <span class="sr-only">(current)</span></a>
+                <a class="nav-link font-weight-bold" href="../about.php">درباره ما <span class="sr-only">(current)</span></a>
             </li>
             <li class="drop rounded">
-                <a class="nav-link" href="contact.php">تماس با ما <span class="sr-only">(current)</span></a>
+                <a class="nav-link font-weight-bold" href="../contact.php">تماس با ما <span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
