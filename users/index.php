@@ -18,13 +18,20 @@
 
 <?php
 
-require_once 'user_layout/header.php';
+use Classes\DB;
+use Classes\User;
 
+require_once '../config.php';
+
+$db = new DB();
+$User = new User($db->conn);
+
+require_once 'user_layout/header.php';
 
 if (isset($_SESSION['login'])) {
 
-    $userget= userGet($_SESSION['name']);
-    $list_User=mysqli_fetch_assoc($userget);
+    $userget = $User->userGet($_SESSION['name']);
+    $list_User=$userget->fetch();
 }
 
 ?>
