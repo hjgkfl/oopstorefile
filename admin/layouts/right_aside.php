@@ -82,6 +82,15 @@ require_once '../config.php';
                       </p>
                   </a>
               </li>
+              <li class="nav-item">
+                  <a href="dashboard.php?get_user" class="nav-link">
+                      <i class="nav-icon fa fa-user fa-2x"></i>
+                      <p>
+                          کاربران
+                          <span class="right badge badge-danger"></span>
+                      </p>
+                  </a>
+              </li>
 					</ul>
         </nav>
         <!-- /.sidebar-menu -->
