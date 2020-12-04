@@ -15,7 +15,17 @@ class Categories extends Model
     {
         return $this->conn->query("SELECT * FROM `categories` WHERE id='{$id}'");
     }
-
+    public function limitCate($limit)
+    {
+        return $this->conn->query("SELECT * FROM `categories` WHERE order by ASC LIMIT $limit");
+    }
+    function menuCate($parent_id)
+    {
+        global $link;
+        $query="SELECT * FROM categories WHERE `parent_id`='{$parent_id}'";
+        $result = mysqli_query($link, $query);
+        return $result;
+    }
     public function updateCate($id, $title,$show_at_index,$comment,$parent_id)
     {
         $query = "UPDATE `categories` SET 
