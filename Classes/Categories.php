@@ -17,7 +17,7 @@ class Categories extends Model
     }
     public function limitCate($limit)
     {
-        return $this->conn->query("SELECT * FROM `categories` WHERE order by ASC LIMIT $limit");
+        return $this->conn->query("SELECT * FROM `categories` LIMIT $limit");
     }
     function menuCate($parent_id)
     {
