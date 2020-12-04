@@ -8,25 +8,15 @@ require_once 'config.php';
 $db = new DB();
 $login = new login($db->conn);
 
-if(count($_POST) && isset($_POST['email']) && isset($_POST['password']) || isset($_POST['Reminder']))
+if(count($_POST) && isset($_POST['email']) && isset($_POST['password']))
 {
-    $error=[];
-   empty($_POST['email']) ? array_push($error,"ایمیل خود را وارد  نکردید") : '';
-   if(empty($_POST['password']))
-   {
-        array_push($error,"رمز عبور خود را وارد  نکردید");
-   }
-   else
-   {
-       if((preg_match("/^(?=.*[A-z])(?=.*[0-9])$/",$_POST['password'])))
-           array_push($error,"رمز عبور  که وارد کردید صحیح نیست !  رمز عبور شما باید دارای حروف کوچک و بزرگ انگلیسی باشد و باید دارای اعداد هم باشد");
-   }
-  if(count($error) == 0)
-  {
-      $login->loginCheck($_POST['email'],$_POST['password']);
-  }
-    $c=count($error);
-    $login->echoError($error,$c);
+    $check_error=$login->checkDate($_POST['email'],$_POST['password']);
+    if(count($check_error) == 0)
+    {
+         $login->loginCheck($_POST['email'],$_POST['password']);
+    }
+    $c=count($check_error);
+    $login->echoError($check_error,$c);
 }
 
 
