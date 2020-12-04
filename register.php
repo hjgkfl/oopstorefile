@@ -26,57 +26,25 @@
 <body class="hold-transition register-page">
 <?php
 
-  require_once("admin/includes/functions.php");
+use Classes\DB;
+use Classes\register;
 
+require_once 'config.php';
+
+$db = new DB();
+$register = new Register($db->conn);
 
 if(count($_POST) && isset($_POST['l_f_name']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['pass_repeat']))
  {
-     $error=[];
-     $l_f_name=mysqli_real_escape_string($link,$_POST['l_f_name']);
-     $email=mysqli_real_escape_string($link,$_POST['email']);
-     $pass=mysqli_real_escape_string($link,$_POST['pass']);
-     $pass_r=mysqli_real_escape_string($link,$_POST['pass_repeat']);
+     $checkerror=$register->checkDate($_POST['l_f_name'],$_POST['email'],$_POST['pass'],$_POST['pass_repeat']);
+     if(count($checkerror) == 0) {
 
-     empty($_POST['l_f_name']) ? array_push($error,"نام و نام خانوادگی خود را وارد نکردید") : '';
-
-     if(empty($_POST['pass']))
-        array_push($error,"رمز عبور خود را وارد نکردید");
-
-     if(empty($_POST['pass_repeat']))
-          array_push($error,"تکرار رمز عبور خود را وارد نکردید");
-
-     if(empty($_POST['email']))
-         array_push($error,"ایمیل خود را وارد نکردید");
-     else
-     {
-         if(filter_var($email,FILTER_VALIDATE_EMAIL)==true)
-         {
-
+         list($s,$n,$em,$role)=$register->storeRegister($_POST['l_f_name'],$_POST['email'] , $_POST['pass']);
+         if ($s == 1)
+             header("location:users/index.php");
          }
-         else
-         {
-             array_push($error,"ایمیل نادرستی وارد کردید !! امیل درستی وارد کنید ");
-
-         }
-     }
-
-     if(!empty($_POST['pass']) && !empty($_POST['pass_repeat']))
-     {
-         if($_POST['pass'] != $_POST['pass_repeat'])
-              array_push($error,"رمز عبور با تکرارش یکی نیست !");
-
-         if((preg_match("/^(?=.*[A-z])(?=.*[0-9])$/",$_POST['pass'])))
-            array_push($error,"رمز عبور  که وارد کردید صحیح نیست !  رمز عبور شما باید دارای حروف کوچک و بزرگ انگلیسی باشد  و باید دارای اعداد هم باشد");
-     }
-     if(count($error) == 0) {
-
-         $run_s_r = storeRegister($l_f_name, $email, $pass);
-         if ($run_s_r = true)
-             $j=new taskvi();
-             $j->taskCheck($email);
-         }
-     $c=count($error);
-     echoError($error,$c);
+     $c=count($checkerror);
+     $register->echoError($checkerror,$c);
 
  }
 	
