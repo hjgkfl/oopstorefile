@@ -1,6 +1,10 @@
 <?php
-require_once("admin/includes/functions.php");
 
+use Classes\DB;
+use Classes\login;
+
+$db = new DB();
+$login = new login();
 
 if(count($_POST) && isset($_POST['email']) && isset($_POST['password']) || isset($_POST['Reminder']))
 {
@@ -17,9 +21,7 @@ if(count($_POST) && isset($_POST['email']) && isset($_POST['password']) || isset
    }
   if(count($error) == 0)
   {
-      login($_POST['email'],$_POST['password'],$_POST['Reminder']);
-
-
+      $login->loginCheck($_POST['email'],$_POST['password']);
   }
     $c=count($error);
     echoError($error,$c);
