@@ -11,36 +11,13 @@
     <link rel="stylesheet" href="./node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css">
     <link rel="stylesheet" href="./style.css" />
 
-    <style>
-
-
-        .card-3d-all
-        {
-            perspective: 1000px ;
-        }
-        .card-3d
-        {
-            position: relative;
-            transform-style: preserve-3d;
-            transform: rotatex(11deg) ;
-            transition: 0.7s ease-in-out;
-
-        }
-        .card-3d:hover
-        {
-            position: relative;
-            transform-style: preserve-3d;
-            transform: rotatex(2deg);
-            box-shadow: 2px 2px 15px 1px #01FF70;
-        }
-    </style>
-
 </head>
 <body dir="rtl">
 
 <?php
 
 require_once("front_layouts/header.php");
+require_once("style.html");
 
 use Classes\DB;
 use Classes\Post;

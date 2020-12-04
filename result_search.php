@@ -25,8 +25,7 @@ $post = new Post($db->conn);
 
 <?php
 require_once("front_layouts/header.php");
-
-
+require_once("style.html");
 ?>
 
 <main class="rtl mt-5 col-12">

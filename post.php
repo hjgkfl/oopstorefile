@@ -7,7 +7,6 @@ use Classes\Post;
 require_once 'config.php';
 
 $db =new DB();
-
 $post_obj = new Post($db->conn);
 
 if((isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) || isset($_GET['page'])) {
@@ -15,7 +14,7 @@ if((isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) || isset
     $post = $post->fetch();
 
     if($post == false) {
-        header('Location: index.php');
+        header('Location: 404.php');
         exit;
     }
 
@@ -23,7 +22,7 @@ if((isset($_GET['id']) && $_GET['id'] != "" && is_numeric($_GET['id'])) || isset
     $post_obj->calculateCountViews($_GET['id']);
 
 } else {
-    header('Location: index.php');
+    header('Location: 404.php');
     exit;
 }
 
