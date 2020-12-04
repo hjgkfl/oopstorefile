@@ -4,7 +4,7 @@
 namespace Classes;
 
 
-class categories extends Model
+class Categories extends Model
 {
     public function all()
     {

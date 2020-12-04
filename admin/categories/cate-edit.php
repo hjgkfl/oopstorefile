@@ -5,7 +5,7 @@ use Classes\categories;
 use Classes\DB;
 
 $db= new DB();
-$categories_get =  new categories($db->conn);
+$categories_get =  new Categories($db->conn);
 
 if(count($_POST) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['comment']) && isset($_POST['parent_id']))
 {

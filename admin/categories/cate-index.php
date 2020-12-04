@@ -3,7 +3,7 @@ use Classes\categories;
 use Classes\DB;
 
 $db= new DB();
-$categories_get =  new categories($db->conn);
+$categories_get =  new Categories($db->conn);
 
 if(isset($_GET['delete']) && is_numeric($_GET['delete']))
 {
