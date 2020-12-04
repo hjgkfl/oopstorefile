@@ -3,8 +3,10 @@
 use Classes\DB;
 use Classes\login;
 
+require_once 'config.php';
+
 $db = new DB();
-$login = new login();
+$login = new login($db->conn);
 
 if(count($_POST) && isset($_POST['email']) && isset($_POST['password']) || isset($_POST['Reminder']))
 {
@@ -24,7 +26,7 @@ if(count($_POST) && isset($_POST['email']) && isset($_POST['password']) || isset
       $login->loginCheck($_POST['email'],$_POST['password']);
   }
     $c=count($error);
-    echoError($error,$c);
+    $login->echoError($error,$c);
 }
 
 
