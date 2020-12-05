@@ -7,6 +7,7 @@ require_once '../config.php';
 $db = new DB();
 $logout = new login($db->conn);
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="rtl">

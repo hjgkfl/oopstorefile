@@ -53,7 +53,7 @@ $users = $get_users->all();
                         <td><?= $user['l-f-name'] ?></td>
                         <td><?= $user['email'] ?></td>
                         <td><?= $user['phone'] ?></td>
-                        <td><?= $user['National Code'] ?></td>
+                        <td><?= $user['National_Code'] ?></td>
                         <td><?= $user['age'] ?></td>
                         <td><?= $user['user_status'] == 1 ?  "مدیر سایت" : 'کاربر معمولی' ?></td>
 
